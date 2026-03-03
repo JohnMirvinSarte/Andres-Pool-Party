@@ -426,6 +426,12 @@
             }
         }
 
+        .age-suffix {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-left: 2px;
+        }
+
         .age-text {
             font-size: 1rem;
             color: white;
@@ -443,6 +449,93 @@
             50% {
                 text-shadow: 0 0 20px rgba(255, 255, 255, 0.8),
                              0 0 30px rgba(254, 202, 87, 0.6);
+            }
+        }
+
+        /* Balloons */
+        #balloon-container {
+            height: 100vh;
+            padding: 1em;
+            box-sizing: border-box;
+            display: flex;
+            flex-wrap: wrap;
+            overflow: hidden;
+            transition: opacity 500ms;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .balloon {
+            height: 125px;
+            width: 105px;
+            border-radius: 75% 75% 70% 70%;
+            position: relative;
+            pointer-events: auto;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .balloon:hover {
+            transform: scale(1.1);
+        }
+
+        .balloon.popping {
+            animation: pop 0.6s ease-out forwards;
+        }
+
+        @keyframes pop {
+            0% {
+                opacity: 1;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(0.5);
+            }
+            100% {
+                opacity: 0;
+                transform: scale(0);
+            }
+        }
+
+        .balloon:before {
+            content: "";
+            height: 75px;
+            width: 1px;
+            padding: 1px;
+            background-color: #FDFD96;
+            display: block;
+            position: absolute;
+            top: 125px;
+            left: 0;
+            right: 0;
+            margin: auto;
+        }
+
+        .balloon:after {
+            content: "▲";
+            text-align: center;
+            display: block;
+            position: absolute;
+            color: inherit;
+            top: 120px;
+            left: 0;
+            right: 0;
+            margin: auto;
+        }
+
+        @keyframes float {
+            from {
+                transform: translateY(100vh);
+                opacity: 1;
+            }
+            to {
+                transform: translateY(-300vh);
+                opacity: 0;
             }
         }
 
@@ -948,9 +1041,166 @@
                 font-size: 1.3rem;
             }
         }
+
+        /* Map Modal */
+        .map-modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.65);
+            backdrop-filter: blur(6px);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .map-modal-overlay.active {
+            display: flex;
+            animation: modalFadeIn 0.3s ease;
+        }
+
+        @keyframes modalFadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to   { opacity: 1; transform: scale(1); }
+        }
+
+        .map-modal {
+            background: linear-gradient(160deg, rgba(255,255,255,0.15), rgba(255,255,255,0.05));
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255,255,255,0.25);
+            border-radius: 20px;
+            width: 100%;
+            max-width: 680px;
+            overflow: hidden;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.5);
+        }
+
+        .map-modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 18px 22px;
+            border-bottom: 1px solid rgba(255,255,255,0.15);
+        }
+
+        .map-modal-title {
+            color: #fff;
+            font-size: 1.1rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .map-modal-title svg {
+            width: 22px;
+            height: 22px;
+            flex-shrink: 0;
+        }
+
+        .map-modal-close {
+            background: rgba(255,255,255,0.12);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: #fff;
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s ease;
+            line-height: 1;
+        }
+
+        .map-modal-close:hover {
+            background: rgba(255,255,255,0.25);
+        }
+
+        .map-modal iframe {
+            width: 100%;
+            height: 360px;
+            border: none;
+            display: block;
+        }
+
+        .map-modal-footer {
+            padding: 16px 22px;
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            justify-content: center;
+            border-top: 1px solid rgba(255,255,255,0.15);
+        }
+
+        .map-btn {
+            padding: 10px 24px;
+            border-radius: 50px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            cursor: pointer;
+            text-decoration: none;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            border: none;
+        }
+
+        .map-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(0,0,0,0.3);
+        }
+
+        .map-btn-primary {
+            background: linear-gradient(135deg, #0099ff, #00d4ff);
+            color: #fff;
+        }
+
+        .map-btn-secondary {
+            background: rgba(255,255,255,0.15);
+            color: #fff;
+            border: 1px solid rgba(255,255,255,0.3);
+        }
     </style>
 </head>
 <body>
+    <!-- Balloons Container -->
+    <div id="balloon-container"></div>
+
+    <!-- Map Modal -->
+    <div class="map-modal-overlay" id="mapModal" onclick="handleMapOverlayClick(event)">
+        <div class="map-modal">
+            <div class="map-modal-header">
+                <div class="map-modal-title">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 21s6-5.8 6-11a6 6 0 1 0-12 0c0 5.2 6 11 6 11z"/>
+                        <circle cx="12" cy="10" r="2.2"/>
+                    </svg>
+                    Pacific Coast Residence Club House
+                </div>
+                <button class="map-modal-close" onclick="closeMapModal()">&times;</button>
+            </div>
+            <iframe
+                id="venueMap"
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"
+                src="https://maps.google.com/maps?q=Pacific+Coast+Residence+Club+House&output=embed"
+                allowfullscreen>
+            </iframe>
+            <div class="map-modal-footer">
+                <a class="map-btn map-btn-primary" href="https://www.google.com/maps/dir/?api=1&destination=Pacific+Coast+Residence+Club+House" target="_blank" rel="noopener">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg>
+                    Get Directions on Maps
+                </a>
+                <button class="map-btn map-btn-secondary" onclick="closeMapModal()">Close</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Toast Container -->
     <div class="toast-container" id="toastContainer"></div>
 
@@ -975,8 +1225,8 @@
             <div class="birthday-badge">
                 <div class="birthday-circle">
                     <div class="birthday-content">
-                        <div class="age-number">11</div>
-                        <div class="age-text">Years</div>
+                        <div class="age-number">11<span class="age-suffix">th</span></div>
+                        <div class="age-text">Birthday</div>
                     </div>
                     <div class="birthday-stars">
                         <div class="star"></div>
@@ -1021,7 +1271,8 @@
             <!-- RSVP -->
             <div class="rsvp-section">
                 <button class="rsvp-button" onclick="handleRSVP()">
-                    <span>See You There!</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:8px;"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg>
+                    <span>Get Directions</span>
                 </button>
             </div>
         </div>
@@ -1103,8 +1354,101 @@
         // RSVP Button Function
         function handleRSVP() {
             showToast("🎉 Awesome! We can't wait to see you at Andres's Pool Party!");
+            openMapModal();
         }
+
+        function openMapModal() {
+            document.getElementById('mapModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeMapModal() {
+            document.getElementById('mapModal').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        function handleMapOverlayClick(e) {
+            if (e.target === document.getElementById('mapModal')) {
+                closeMapModal();
+            }
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeMapModal();
+        });
+
+        // Balloon System
+        const balloonContainer = document.getElementById("balloon-container");
+        let balloonCount = 0;
+        let poppedCount = 0;
+
+        function random(num) {
+            return Math.floor(Math.random() * num);
+        }
+
+        function getRandomStyles() {
+            var h = random(360);
+            var s = random(30) + 70;   // 70–100%  saturation
+            var l = random(20) + 55;   // 55–75%   lightness  (no dark tones)
+            var mt = random(200);
+            var ml = random(50);
+            var dur = random(5) + 5;
+            return `
+            background-color: hsl(${h}, ${s}%, ${l}%);
+            color: hsl(${h}, ${s}%, ${l}%);
+            box-shadow: inset -7px -3px 10px hsl(${h}, ${s}%, ${l - 15}%);
+            margin: ${mt}px 0 0 ${ml}px;
+            animation: float ${dur}s ease-in infinite
+            `;
+        }
+
+        function popBalloon(balloon) {
+            if (balloon.classList.contains('popping')) return;
+            
+            balloon.classList.add('popping');
+            poppedCount++;
+            
+            // Show celebration message for every few balloons popped
+            if (poppedCount === 10) {
+                showToast("🎊 Nice! 10 balloons popped!");
+            } else if (poppedCount === 20) {
+                showToast("🎉 Amazing! 20 balloons popped!");
+            } else if (poppedCount === 30) {
+                showToast("🎈 Incredible! All balloons popped! Party time!");
+                // Remove container after all balloons are popped
+                setTimeout(() => {
+                    balloonContainer.style.opacity = 0;
+                    setTimeout(() => {
+                        balloonContainer.remove();
+                    }, 500);
+                }, 500);
+            }
+            
+            setTimeout(() => {
+                balloon.remove();
+            }, 600);
+        }
+
+        function createBalloons(num) {
+            for (var i = num; i > 0; i--) {
+                var balloon = document.createElement("div");
+                balloon.className = "balloon";
+                balloon.style.cssText = getRandomStyles();
+                
+                // Add click handler to individual balloons
+                balloon.addEventListener("click", function(e) {
+                    e.stopPropagation();
+                    popBalloon(balloon);
+                });
+                
+                balloonContainer.append(balloon);
+                balloonCount++;
+            }
+        }
+
+        window.addEventListener("load", () => {
+            createBalloons(30);
+        });
     </script>
 </body>
 </html>
-
